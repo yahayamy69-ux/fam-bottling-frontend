@@ -386,6 +386,170 @@
   .hero-tagline {
     font-size: 1.25rem;
   }
+}
+
+/* Inspiration Section */
+.inspiration-section {
+  padding: 0;
+  margin: 3rem 0;
+  height: 500px;
+  overflow: hidden;
+}
+
+.inspiration-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inspiration-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.inspiration-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inspiration-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 82, 163, 0.75) 0%, rgba(0, 61, 153, 0.6) 100%);
+  z-index: 2;
+}
+
+.inspiration-content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.inspiration-content h2 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.inspiration-content h3 {
+  font-size: 1.3rem;
+  color: #e0f2ff;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.inspiration-quote {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.inspiration-desc {
+  font-size: 1rem;
+  color: #f0f9ff;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Scroll Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.problem-statement {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.features {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.bottle-sizes {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.cta-section {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Copyright Footer */
+.copyright-footer {
+  background: #003d99;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-top: 3px solid #0052a3;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.footer-content p:first-child {
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .inspiration-section {
+    height: 400px;
+  }
+
+  .inspiration-content {
+    max-width: 90%;
+  }
+
+  .inspiration-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .inspiration-content h3 {
+    font-size: 1rem;
+  }
+
+  .inspiration-quote {
+    font-size: 0.95rem;
+  }
+
+  .inspiration-desc {
+    font-size: 0.9rem;
+  }
 
   .bottle-display {
     gap: 1rem;
@@ -398,5 +562,13 @@
   .features-grid,
   .sizes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .copyright-footer {
+    padding: 1.5rem;
+  }
+
+  .footer-content p {
+    font-size: 0.85rem;
   }
 }

@@ -12,7 +12,7 @@ const SupplyForm = () => {
 
   const [formData, setFormData] = useState({
     bottleSize: '1L',
-    quantity: 1,
+    quantity: 1, // Machine counts automatically - fixed at 1 for submission
     pricePerUnit: randomPrice(),
   });
   const [cashbackInfo, setCashbackInfo] = useState(null);
@@ -20,7 +20,7 @@ const SupplyForm = () => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const bottleSizes = ['30cl', '50cl', '60cl', '75cl', '1L', '1.5L'];
+  const bottleSizes = ['30cl', '50cl', '60cl', '1L'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -112,19 +112,6 @@ const SupplyForm = () => {
                   </option>
                 ))}
               </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="quantity">Quantity (Units) *</label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                min="1"
-                required
-              />
             </div>
 
             <div className="form-group">

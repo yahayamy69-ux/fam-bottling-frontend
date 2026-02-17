@@ -173,11 +173,40 @@ const LandingPage = () => {
       <section className="bottle-sizes">
         <h2>Available Bottle Sizes</h2>
         <div className="sizes-grid">
-          {['30cl', '50cl', '60cl', '75cl', '1L', '1.5L'].map((size) => (
+          {['30cl', '50cl', '60cl', '1L'].map((size) => (
             <div key={size} className="size-card">
               <p>{size}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Yahaya Inspiration Section */}
+      <section className="inspiration-section">
+        <div className="inspiration-container">
+          <div className="inspiration-image">
+            <img src="/images/3.jpeg" alt="Engr Yahaya Muhammad" />
+          </div>
+          <div className="inspiration-content">
+            <h2>Our Vision</h2>
+            <h3>Engr Yahaya Muhammad - Co-Founder & Technical Lead</h3>
+            <p className="inspiration-quote">
+              "The future of sustainability doesn't rest on the shoulders of corporations alone. 
+              It takes committed individuals and innovative solutions to create real change. 
+              When I saw the massive waste of plastic bottles being discarded daily, I knew we had to act. 
+              FAM Bottling Co was born from a simple belief: that every bottle collected is a step 
+              towards a cleaner planet, and every supplier rewarded is a partner in progress."
+            </p>
+            <p className="inspiration-desc">
+              At FAM Bottling Co, we're not just recycling bottles—we're building a movement. 
+              We believe that business and environmental responsibility go hand in hand. 
+              By offering fair prices and sustainable practices, we're proving that doing good 
+              and doing well aren't mutually exclusive.
+            </p>
+            <Link to="/meet-founders">
+              <Button variant="secondary">Meet All Founders</Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -194,6 +223,14 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
+
+      {/* Copyright Footer */}
+      <footer className="copyright-footer">
+        <div className="footer-content">
+          <p>&copy; {new Date().getFullYear()} FAM Bottling Co. All rights reserved.</p>
+          <p>Dedicated to sustainable PET bottle solutions and environmental protection.</p>
+        </div>
+      </footer>
     </div>
   );
 };

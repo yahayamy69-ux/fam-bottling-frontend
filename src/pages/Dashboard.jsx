@@ -75,12 +75,12 @@ const Dashboard = ({ user }) => {
 
         <Card className="stat-card">
           <h3>Total Revenue</h3>
-          <p className="stat-value">${summary.totalAmount.toFixed(2)}</p>
+          <p className="stat-value">₦{summary.totalAmount.toFixed(0)}</p>
         </Card>
 
         <Card className="stat-card">
           <h3>Total Cashback</h3>
-          <p className="stat-value">${summary.totalCashback.toFixed(2)}</p>
+          <p className="stat-value">₦{summary.totalCashback.toFixed(0)}</p>
         </Card>
 
         <Card className="stat-card">
@@ -146,8 +146,8 @@ const Dashboard = ({ user }) => {
                     <td>{new Date(supply.createdAt).toLocaleDateString()}</td>
                     <td>{supply.bottleSize}</td>
                     <td>{supply.quantity}</td>
-                    <td>${supply.totalAmount.toFixed(2)}</td>
-                    <td className="cashback-cell">${supply.cashback.toFixed(2)}</td>
+                    <td>₦{supply.totalAmount.toFixed(0)}</td>
+                    <td className="cashback-cell">₦{supply.cashback.toFixed(0)}</td>
                     <td>
                       <span
                         className="status-badge"
