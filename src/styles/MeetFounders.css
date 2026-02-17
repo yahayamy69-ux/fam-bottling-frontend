@@ -1,0 +1,119 @@
+.meet-founders-page {
+  min-height: 100vh;
+  background-color: var(--light-bg);
+}
+
+.founders-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.founders-header h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.header-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.founders-container {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.founder-card {
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.founder-card:hover {
+  transform: translateY(-5px);
+}
+
+.founder-image {
+  width: 100%;
+  height: 300px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.founder-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.founder-info {
+  padding: 1rem 0;
+}
+
+.founder-info h3 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.founder-title {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.founders-story {
+  max-width: 900px;
+  margin: 4rem auto 3rem;
+  padding: 0 2rem;
+}
+
+.story-card {
+  padding: 2rem;
+  text-align: center;
+}
+
+.story-card h2 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.story-card p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.story-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .founders-header h1 {
+    font-size: 2rem;
+  }
+
+  .header-subtitle {
+    font-size: 1rem;
+  }
+
+  .founders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .founder-image {
+    height: 250px;
+  }
+}
