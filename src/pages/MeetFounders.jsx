@@ -6,17 +6,17 @@ const MeetFounders = () => {
   const founders = [
     {
       name: 'Engr Adam Muhammad',
-      image: '/src/images/1.jpeg',
+      image: '/images/1.jpeg',
       title: 'Founder & CEO'
     },
     {
       name: 'Engr Fatima Umar-Sadiq',
-      image: '/src/images/fatima replacement picture.jpeg',
+      image: '/images/fatima replacement picture.jpeg',
       title: 'Co-Founder & Operations Lead'
     },
     {
       name: 'Engr Yahaya Muhammad',
-      image: '/src/images/3.jpeg',
+      image: '/images/3.jpeg',
       title: 'Co-Founder & Technical Lead'
     }
   ];
