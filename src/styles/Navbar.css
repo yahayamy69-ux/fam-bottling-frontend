@@ -1,56 +1,62 @@
 .navbar {
   background: #ffffff;
-  color: var(--text-dark);
-  padding: 1rem 0;
-  box-shadow: 0 2px 8px rgba(0, 82, 163, 0.1);
+  color: #1f2937; /* darker text */
+  padding: 0.5rem 0; /* smaller height */
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
   position: sticky;
   top: 0;
-  z-index: 100;
-  border-bottom: 2px solid var(--primary-color);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  transition: transform 280ms cubic-bezier(.2,.9,.3,1), background 200ms ease, box-shadow 200ms ease;
+  backdrop-filter: saturate(120%) blur(6px);
 }
 
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
+  font-size: 1.125rem; /* smaller */
   font-weight: 700;
-  color: var(--primary-color);
-  transition: transform 0.3s ease;
+  color: var(--lux-gold); /* luxe brand color */
+  letter-spacing: 0.6px;
+  transition: transform 0.18s ease, color 180ms ease;
 }
 
 .navbar-brand:hover {
-  transform: scale(1.05);
+  transform: translateY(-1px);
 }
 
 .navbar-menu {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
 .navbar-menu a {
-  color: var(--text-dark);
+  color: #374151; /* medium gray */
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .navbar-menu a:hover {
-  color: var(--primary-color);
+  color: #0b5cff; /* primary accent */
+  background: rgba(11,92,255,0.06);
+  transform: translateY(-1px);
 }
 
 .logout-btn {
-  background-color: #dc2626;
+  background-color: #ef4444;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 0.35rem 0.7rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-weight: 600;
@@ -58,7 +64,13 @@
 }
 
 .logout-btn:hover {
-  background-color: #991b1b;
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Hidden state when scrolling down */
+.navbar--hidden {
+  transform: translateY(-110%);
 }
 
 @media (max-width: 768px) {

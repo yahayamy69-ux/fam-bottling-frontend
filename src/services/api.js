@@ -53,4 +53,28 @@ export const contactService = {
     api.post('/contact', { name, email, subject, message })
 };
 
+// QR service for authentication
+export const qrService = {
+  generateLoginQR: () =>
+    api.post('/qr/generate-login'),
+  authenticateWithQR: (sessionCode) =>
+    api.post('/qr/authenticate', { sessionCode }),
+  checkQRStatus: (sessionCode) =>
+    api.get(`/qr/status/${sessionCode}`),
+  generateScanSessionQR: () =>
+    api.post('/qr/generate-scan-session'),
+};
+
+// Bottle scan service
+export const bottleScanService = {
+  submitScannedBottle: (barcode, bottleSize, quantity, pricePerUnit, sessionCode) =>
+    api.post('/bottle-scan', { barcode, bottleSize, quantity, pricePerUnit, sessionCode }),
+  verifyBarcode: (barcode, bottleSize) =>
+    api.post('/bottle-scan/verify-barcode', { barcode, bottleSize }),
+  getUserScannedBottles: () =>
+    api.get('/bottle-scan/my'),
+  getScannedBottleById: (id) =>
+    api.get(`/bottle-scan/${id}`),
+};
+
 export default api;

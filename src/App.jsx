@@ -7,6 +7,10 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import SupplyForm from './pages/SupplyForm';
+import BottleScanForm from './pages/BottleScanForm';
+import BottleScanFormAI from './pages/BottleScanFormAI';
+import QRLoginPage from './pages/QRLoginPage';
+import SPVRMMachine from './pages/SPVRMMachine';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import MeetFounders from './pages/MeetFounders';
@@ -43,15 +47,23 @@ function App() {
     <Router>
       <Navbar user={user} onLogout={handleLogout} />
       <Routes>
+        {/* SPVRM Machine Kiosk Mode */}
+        <Route path="/machine" element={<SPVRMMachine />} />
+
         {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/meet-founders" element={<MeetFounders />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LoginPage setUser={setUser} />} />
+        <Route path="/qr-login" element={<QRLoginPage setUser={setUser} />} />
+        <Route path="/qr-auth" element={<QRLoginPage setUser={setUser} />} />
         <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <RegisterPage setUser={setUser} />} />
 
         {/* Protected Routes */}
         <Route path="/supply" element={user ? <SupplyForm /> : <Navigate to="/login" />} />
+        <Route path="/bottle-scan" element={user ? <BottleScanForm /> : <Navigate to="/login" />} />
+        <Route path="/bottle-scan-ai" element={user ? <BottleScanFormAI /> : <Navigate to="/login" />} />
+        <Route path="/qr-scan" element={user ? <BottleScanForm /> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} />
 
         {/* Admin Routes */}

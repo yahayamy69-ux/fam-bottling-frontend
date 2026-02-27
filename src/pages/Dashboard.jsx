@@ -167,9 +167,14 @@ const Dashboard = ({ user }) => {
       {/* Action Card */}
       <Card className="action-card">
         <h3>Ready to supply more bottles?</h3>
-        <a href="/supply">
-          <Button variant="primary">Submit New Supply</Button>
-        </a>
+        <div className="action-buttons">
+          <a href="/supply">
+            <Button variant="primary">Submit New Supply</Button>
+          </a>
+          <a href="/bottle-scan">
+            <Button variant="secondary">🔍 Scan Bottles</Button>
+          </a>
+        </div>
       </Card>
     </div>
   );

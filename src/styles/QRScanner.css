@@ -1,0 +1,164 @@
+.qr-scanner-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.qr-scanner-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.qr-scanner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #1e7145 0%, #2d9d5c 100%);
+  color: white;
+}
+
+.qr-scanner-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.qr-scanner-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.qr-scanner-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.qr-scanner-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #f9fafb;
+  position: relative;
+  min-height: 400px;
+}
+
+#qr-scanner-container {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #1e7145;
+}
+
+.scanner-hint {
+  margin-top: 16px;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
+}
+
+.scanner-paused {
+  background: white;
+  min-height: 300px;
+}
+
+.scan-complete {
+  font-size: 18px;
+  color: #10b981;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.btn-rescan,
+.btn-close-modal {
+  background: linear-gradient(135deg, #1e7145 0%, #2d9d5c 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 12px;
+}
+
+.btn-rescan:hover,
+.btn-close-modal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 113, 69, 0.3);
+}
+
+.btn-close-modal {
+  background: #6b7280;
+}
+
+.btn-close-modal:hover {
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+/* Mobile/Kiosk optimizations */
+@media (max-width: 768px) {
+  .qr-scanner-container {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  #qr-scanner-container {
+    max-width: 300px;
+  }
+
+  .qr-scanner-header h3 {
+    font-size: 16px;
+  }
+
+  .btn-rescan,
+  .btn-close-modal {
+    padding: 14px 28px;
+    font-size: 16px;
+    width: 100%;
+  }
+}
+
+/* Touch-friendly for SPVRM kiosk */
+@media (hover: none) and (pointer: coarse) {
+  .qr-scanner-close,
+  .btn-rescan,
+  .btn-close-modal {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .qr-scanner-header {
+    padding: 20px;
+  }
+
+  .qr-scanner-content {
+    padding: 24px;
+  }
+}
