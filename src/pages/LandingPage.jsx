@@ -1,10 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import '../styles/LandingPage.css';
 
 const LandingPage = () => {
+  const [animatedStats, setAnimatedStats] = useState({
+    bottles: 0,
+    waste: 0,
+    revenue: 0
+  });
+
+  useEffect(() => {
+    const targets = {
+      bottles: 10000,
+      waste: 500,
+      revenue: 4000000
+    };
+
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const interval = duration / steps;
+
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
+
+      setAnimatedStats({
+        bottles: Math.floor(targets.bottles * progress),
+        waste: Math.floor(targets.waste * progress),
+        revenue: Math.floor(targets.revenue * progress)
+      });
+
+      if (step >= steps) {
+        clearInterval(timer);
+        setAnimatedStats(targets); // Ensure exact final values
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="landing-page">
       {/* Hero Section */}
@@ -68,21 +105,17 @@ const LandingPage = () => {
           <h2>Our Impact</h2>
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-number">10,000+</div>
+              <div className="stat-number">{animatedStats.bottles.toLocaleString()}+</div>
               <div className="stat-label">Bottles Recycled</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">500kg</div>
+              <div className="stat-number">{animatedStats.waste}kg</div>
               <div className="stat-label">Plastic Waste Reduced</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">₦250,000</div>
+              <div className="stat-number">₦{animatedStats.revenue.toLocaleString()}</div>
               <div className="stat-label">Cashback Paid</div>
             </div>
-          </div>
-          <div className="impact-images">
-            <img src="https://ecobarter.africa/wp-content/uploads/2024/06/Sortabox-live.png" alt="Recycling in action" className="impact-img" />
-            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400" alt="Plastic bottles collection" className="impact-img" />
           </div>
         </div>
       </section>
