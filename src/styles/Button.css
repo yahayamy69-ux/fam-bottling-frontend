@@ -17,7 +17,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #0066cc 0%, var(--primary-color) 100%);
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
   color: white;
 }
 
@@ -27,12 +27,12 @@
 }
 
 .btn-secondary {
-  background-color: #0052a3;
+  background-color: var(--primary-color);
   color: white;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #003d99;
+  background-color: var(--text-dark);
   box-shadow: var(--shadow);
 }
 
