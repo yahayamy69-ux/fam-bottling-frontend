@@ -78,7 +78,7 @@ const AdminDashboard = () => {
                 <div className="pending-info">
                   <strong>{supply.supplierName}</strong> - {supply.bottleSize} x {supply.quantity} bottles
                   <br />
-                  Amount: ${supply.totalAmount.toFixed(2)} | Date: {new Date(supply.createdAt).toLocaleDateString()}
+                  Amount: ₦{supply.totalAmount.toFixed(2)} | Date: {new Date(supply.createdAt).toLocaleDateString()}
                 </div>
                 <div className="pending-actions">
                   <button 
@@ -142,7 +142,7 @@ const AdminDashboard = () => {
           </div>
           <div className="stat">
             <p className="stat-label">Total Revenue</p>
-            <p className="stat-number">${supplies.reduce((sum, s) => sum + s.totalAmount, 0).toFixed(2)}</p>
+            <p className="stat-number">₦{supplies.reduce((sum, s) => sum + s.totalAmount, 0).toFixed(2)}</p>
           </div>
         </div>
       </Card>
