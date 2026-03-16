@@ -80,6 +80,10 @@ const LandingPage = () => {
               <div className="stat-label">Cashback Paid</div>
             </div>
           </div>
+          <div className="impact-images">
+            <img src="https://ecobarter.africa/wp-content/uploads/2024/06/Sortabox-live.png" alt="Recycling in action" className="impact-img" />
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400" alt="Plastic bottles collection" className="impact-img" />
+          </div>
         </div>
       </section>
 
@@ -114,11 +118,15 @@ const LandingPage = () => {
           <div className="testimonials-grid">
             <Card className="testimonial-card">
               <p>"FAM Bottling Co has made recycling rewarding and easy. I've earned significant cashback while helping the environment."</p>
-              <div className="testimonial-author">- Sarah Johnson, Regular Supplier</div>
+              <div className="testimonial-author">- Adebayo Johnson, Regular Supplier</div>
             </Card>
             <Card className="testimonial-card">
               <p>"The QR scanning feature is innovative and convenient. Great initiative for sustainable living."</p>
-              <div className="testimonial-author">- Michael Ade, Tech Enthusiast</div>
+              <div className="testimonial-author">- Fatima Adeyemi, Tech Enthusiast</div>
+            </Card>
+            <Card className="testimonial-card">
+              <p>"As a business owner, partnering with FAM has helped us reduce waste and improve our sustainability image."</p>
+              <div className="testimonial-author">- Chukwuma Okoye, Business Partner</div>
             </Card>
           </div>
         </div>
