@@ -23,6 +23,12 @@
   overflow: hidden;
 }
 
+/* Hide file upload button */
+.qr-scanner-container input[type="file"],
+.qr-scanner-container button[title*="Select Image"] {
+  display: none !important;
+}
+
 .qr-scanner-header {
   display: flex;
   justify-content: space-between;

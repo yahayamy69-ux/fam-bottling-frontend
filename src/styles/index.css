@@ -1,15 +1,15 @@
 :root {
-  --primary-color: #0b2850; /* deep navy */
-  --secondary-color: #0f3b6b;
-  --accent-color: #0b5cff;
-  --lux-gold: #c9a24f; /* luxe gold */
-  --light-bg: #fbfbfc;
+  --primary-color: #1e40af; /* professional blue */
+  --secondary-color: #3b82f6;
+  --accent-color: #10b981; /* eco green */
+  --lux-gold: #f59e0b; /* warm amber */
+  --light-bg: #f8fafc;
   --card-bg: #ffffff;
-  --text-dark: #111827; /* dark slate */
+  --text-dark: #1f2937;
   --text-light: #6b7280;
-  --border-color: #e6e9ee;
-  --shadow: 0 6px 18px rgba(11, 40, 80, 0.06);
-  --shadow-lg: 0 18px 40px rgba(11, 40, 80, 0.09);
+  --border-color: #e5e7eb;
+  --shadow: 0 6px 18px rgba(30, 64, 175, 0.06);
+  --shadow-lg: 0 18px 40px rgba(30, 64, 175, 0.09);
 }
 
 * {
