@@ -68,6 +68,63 @@ const AdminDashboard = () => {
 
       {error && <div className="error-message">{error}</div>}
 
+      {/* Pending Approvals Section */}
+      <Card className="admin-pending">
+        <h3>Pending Approvals</h3>
+        {supplies.filter(s => s.status === 'pending').length > 0 ? (
+          <div className="pending-list">
+            {supplies.filter(s => s.status === 'pending').map((supply) => (
+              <div key={supply._id} className="pending-item">
+                <div className="pending-info">
+                  <strong>{supply.supplierName}</strong> - {supply.bottleSize} x {supply.quantity} bottles
+                  <br />
+                  Amount: ${supply.totalAmount.toFixed(2)} | Date: {new Date(supply.createdAt).toLocaleDateString()}
+                </div>
+                <div className="pending-actions">
+                  <button 
+                    className="btn-approve"
+                    onClick={() => {
+                      setUpdateModal(supply._id);
+                      setUpdateStatus('approved');
+                    }}
+                  >
+                    Approve
+                  </button>
+                  <button 
+                    className="btn-reject"
+                    onClick={() => {
+                      setUpdateModal(supply._id);
+                      setUpdateStatus('rejected');
+                    }}
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No pending approvals</p>
+        )}
+      </Card>
+
+      {/* Notifications Section */}
+      <Card className="admin-notifications">
+        <h3>Recent Notifications</h3>
+        <div className="notifications-list">
+          {supplies.slice(0, 5).map((supply) => (
+            <div key={supply._id} className="notification-item">
+              <div className={`status-indicator ${supply.status}`}></div>
+              <div className="notification-content">
+                <strong>{supply.supplierName}</strong> {supply.status} a supply request
+                <br />
+                <small>{new Date(supply.createdAt).toLocaleString()}</small>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
       <Card className="admin-stats">
         <h3>Platform Overview</h3>
         <div className="stats-grid">
