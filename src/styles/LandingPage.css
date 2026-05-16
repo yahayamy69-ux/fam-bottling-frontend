@@ -98,23 +98,80 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
-  text-align: center;
+  justify-items: center;
 }
 
 .stat-item {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 2rem;
+  box-shadow: 0 10px 30px rgba(30, 113, 69, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: spin 5s linear infinite;
+  transition: transform 0.3s ease;
 }
 
-  .stat-number {
-  font-size: 3rem;
+.stat-item:hover {
+  transform: scale(1.05);
+}
+
+.stat-item::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shine 5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(0deg) translateX(-100%);
+  }
+  50% {
+    transform: rotate(0deg) translateX(100%);
+  }
+  100% {
+    transform: rotate(0deg) translateX(100%);
+  }
+}
+
+.stat-number {
+  font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: white;
   margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  position: relative;
 }
 
 .stat-label {
-  font-size: 1.1rem;
-  color: var(--text-light);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  z-index: 1;
+  position: relative;
 }
 
 /* How It Works */
@@ -798,5 +855,42 @@
 
   .footer-content p {
     font-size: 0.85rem;
+  }
+}
+
+/* Circular Stats Responsive Design */
+@media (max-width: 768px) {
+  .stat-item {
+    width: 150px;
+    height: 150px;
+    padding: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-item {
+    width: 120px;
+    height: 120px;
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .stats-grid {
+    gap: 1rem;
   }
 }

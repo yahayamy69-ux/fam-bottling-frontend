@@ -87,8 +87,34 @@ const MLScanner = ({ onDetectionComplete, onClose }) => {
         setError('Analysis failed: ' + (response.data.error || 'Unknown error'));
       }
     } catch (err) {
-      setError(err.response?.data?.error || err.message || 'Analysis failed');
       console.error('Analysis error:', err);
+      
+      // Handle network errors gracefully
+      if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error') || !err.response) {
+        setError('🤖 AI Service Unavailable - Please enter details manually or try again later');
+        // Still capture the image for manual review
+        if (videoRef.current && canvasRef.current) {
+          const context = canvasRef.current.getContext('2d');
+          canvasRef.current.width = videoRef.current.videoWidth;
+          canvasRef.current.height = videoRef.current.videoHeight;
+          context.drawImage(videoRef.current, 0, 0);
+          
+          setResults({
+            bottleCount: 0,
+            condition: 'unknown',
+            conditionConfidence: 0,
+            estimatedSize: 'unknown',
+            sizeConfidence: 0,
+            qualityScore: 0,
+            raw: null,
+            imageBase64: canvasToBase64(canvasRef.current),
+            manualEntryRequired: true
+          });
+          setScanning(false);
+        }
+      } else {
+        setError(err.response?.data?.error || err.message || 'Analysis failed');
+      }
     } finally {
       setAnalyzing(false);
     }
@@ -162,61 +188,70 @@ const MLScanner = ({ onDetectionComplete, onClose }) => {
         ) : results ? (
           <>
             <div className="ml-results-header">
-              <h3>✓ Analysis Complete</h3>
+              <h3>{results.manualEntryRequired ? '⚠️ Manual Entry Required' : '✓ Analysis Complete'}</h3>
               <button className="ml-scanner-close" onClick={onClose}>✕</button>
             </div>
 
             <div className="ml-results-container">
-              {/* Condition Card */}
-              <div className="ml-result-card condition-card">
-                <h4>Bottle Condition</h4>
-                <div className="condition-display" style={{ borderLeft: `4px solid ${conditionInfo.color}` }}>
-                  <span className="condition-emoji">{conditionInfo.emoji}</span>
-                  <div className="condition-details">
-                    <p className="condition-status">{conditionInfo.message}</p>
-                    <p className="condition-confidence">Confidence: {results.conditionConfidence.toFixed(1)}%</p>
+              {results.manualEntryRequired ? (
+                <div className="ml-manual-entry-notice">
+                  <p>🤖 AI service is currently unavailable. Please enter bottle details manually.</p>
+                  <p>The image has been captured for your reference.</p>
+                </div>
+              ) : (
+                <>
+                  {/* Condition Card */}
+                  <div className="ml-result-card condition-card">
+                    <h4>Bottle Condition</h4>
+                    <div className="condition-display" style={{ borderLeft: `4px solid ${conditionInfo.color}` }}>
+                      <span className="condition-emoji">{conditionInfo.emoji}</span>
+                      <div className="condition-details">
+                        <p className="condition-status">{conditionInfo.message}</p>
+                        <p className="condition-confidence">Confidence: {results.conditionConfidence.toFixed(1)}%</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Size Estimation Card */}
-              <div className="ml-result-card size-card">
-                <h4>Estimated Size</h4>
-                <div className="size-display">
-                  <p className="size-value">{results.estimatedSize}</p>
-                  <p className="size-confidence">
-                    {getSizeConfidenceLabel(results.sizeConfidence)}
-                  </p>
-                </div>
-              </div>
+                  {/* Size Estimation Card */}
+                  <div className="ml-result-card size-card">
+                    <h4>Estimated Size</h4>
+                    <div className="size-display">
+                      <p className="size-value">{results.estimatedSize}</p>
+                      <p className="size-confidence">
+                        {getSizeConfidenceLabel(results.sizeConfidence)}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Quality Score Card */}
-              <div className="ml-result-card quality-card">
-                <h4>Overall Quality</h4>
-                <div className="quality-bar">
-                  <div
-                    className="quality-fill"
-                    style={{ width: `${results.qualityScore}%` }}
-                  ></div>
-                </div>
-                <p className="quality-score">{results.qualityScore.toFixed(0)}%</p>
-              </div>
+                  {/* Quality Score Card */}
+                  <div className="ml-result-card quality-card">
+                    <h4>Overall Quality</h4>
+                    <div className="quality-bar">
+                      <div
+                        className="quality-fill"
+                        style={{ width: `${results.qualityScore}%` }}
+                      ></div>
+                    </div>
+                    <p className="quality-score">{results.qualityScore.toFixed(0)}%</p>
+                  </div>
 
-              {/* Bottles Detected */}
-              {results.bottleCount > 0 && (
-                <div className="ml-result-card bottles-card">
-                  <h4>Bottles Detected</h4>
-                  <p className="bottle-count">{results.bottleCount}</p>
-                </div>
+                  {/* Bottles Detected */}
+                  {results.bottleCount > 0 && (
+                    <div className="ml-result-card bottles-card">
+                      <h4>Bottles Detected</h4>
+                      <p className="bottle-count">{results.bottleCount}</p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
             <div className="ml-results-actions">
               <button className="ml-btn-retake" onClick={handleRetake}>
-                🔄 Retake
+                🔄 Retake Photo
               </button>
               <button className="ml-btn-confirm" onClick={handleConfirm}>
-                ✓ Use These Details
+                ✓ {results.manualEntryRequired ? 'Continue with Manual Entry' : 'Use These Details'}
               </button>
             </div>
           </>

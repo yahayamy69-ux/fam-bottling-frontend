@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ML_SERVICE_URL = process.env.REACT_APP_ML_SERVICE_URL || 'http://localhost:5001';
+const ML_SERVICE_URL = import.meta.env.VITE_ML_SERVICE_URL || 'http://localhost:5001';
 
 // Image preprocessing utilities
 export const imageToBase64 = async (file) => {

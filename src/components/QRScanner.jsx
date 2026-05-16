@@ -26,19 +26,29 @@ const QRScanner = ({ onScan, onError, title = 'Scan QR Code or Barcode', allowCl
     html5QrcodeScannerRef.current = html5QrcodeScan;
 
     const onScanSuccess = (decodedText) => {
+      console.log('QR/Barcode detected:', decodedText);
       html5QrcodeScan.pause();
       setScanning(false);
       onScan(decodedText);
     };
 
     const onScanFailure = (error) => {
-      // Low-level debugging. Ignore 'QR code parse error'
-      if (error && error.includes && !error.includes('QR code parse error')) {
+      // Low-level debugging. Ignore common scanning errors but log others
+      if (error && typeof error === 'string' && 
+          !error.includes('QR code parse error') && 
+          !error.includes('No QR code found') &&
+          !error.includes('No MultiFormat Readers')) {
+        console.warn('Scanner error:', error);
         onError?.(error);
       }
     };
 
-    html5QrcodeScan.render(onScanSuccess, onScanFailure);
+    // Add error handling for render
+    html5QrcodeScan.render(onScanSuccess, onScanFailure).catch((err) => {
+      console.error('Failed to render scanner:', err);
+      setScanning(false);
+      onError?.(`Failed to start camera: ${err.message}`);
+    });
 
     return () => {
       if (html5QrcodeScannerRef.current) {

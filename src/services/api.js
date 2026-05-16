@@ -77,4 +77,14 @@ export const bottleScanService = {
     api.get(`/bottle-scan/${id}`),
 };
 
+// Scanner game service for barcode earning
+export const scannerGameService = {
+  generateCode: () =>
+    api.post('/scanner-game/generate-code'),
+  processScan: (scannedValue) =>
+    api.post('/scanner-game/process-scan', { scannedValue }),
+  getUserStats: () =>
+    api.get('/scanner-game/my-stats'),
+};
+
 export default api;

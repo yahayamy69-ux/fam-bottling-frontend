@@ -60,11 +60,17 @@ const BottleScanFormAI = () => {
     setMLAnalysis(mlResults);
     setShowMLScanner(false);
     
-    // Show confidence info
-    const sizeText = `${mlResults.bottleSize} detected`;
-    const conditionText = `Condition: ${mlResults.condition}`;
-    setSuccess(`✓ ${sizeText} | ${conditionText}`);
-    setTimeout(() => setSuccess(''), 4000);
+    // Show appropriate message based on whether AI worked or manual entry is needed
+    if (mlResults.manualEntryRequired) {
+      setError('🤖 AI Service Unavailable - Please complete the form manually');
+      setTimeout(() => setError(''), 5000);
+    } else {
+      // Show confidence info
+      const sizeText = `${mlResults.bottleSize} detected`;
+      const conditionText = `Condition: ${mlResults.condition}`;
+      setSuccess(`✓ ${sizeText} | ${conditionText}`);
+      setTimeout(() => setSuccess(''), 4000);
+    }
   };
 
   const handleManualInput = (e) => {

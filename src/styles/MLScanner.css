@@ -342,3 +342,24 @@
     min-height: 44px;
   }
 }
+
+/* Manual entry notice styling */
+.ml-manual-entry-notice {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.ml-manual-entry-notice p {
+  margin: 8px 0;
+  color: #92400e;
+  font-size: 14px;
+}
+
+.ml-manual-entry-notice p:first-child {
+  font-weight: 600;
+  color: #78350f;
+}

@@ -4,6 +4,7 @@ import '../styles/Navbar.css';
 
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
@@ -13,6 +14,14 @@ const Navbar = ({ user, onLogout }) => {
     navigate('/');
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   useEffect(() => {
     function onScroll() {
       const currentY = window.scrollY;
@@ -20,6 +29,7 @@ const Navbar = ({ user, onLogout }) => {
         window.requestAnimationFrame(() => {
           if (currentY > lastScrollY.current && currentY > 100) {
             setHidden(true);
+            setIsMobileMenuOpen(false); // Close mobile menu on scroll
           } else {
             setHidden(false);
           }
@@ -37,39 +47,62 @@ const Navbar = ({ user, onLogout }) => {
   return (
     <nav className={`navbar ${hidden ? 'navbar--hidden' : ''}`}>
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
-          FAM Bottling Co
+        <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
+          FAM
         </Link>
-        <ul className="navbar-menu">
+
+        {/* Desktop Menu */}
+        <ul className="navbar-menu desktop-menu">
           {!user ? (
             <>
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/meet-founders">Meet Founders</Link></li>
-              <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/meet-founders">Founders</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
               <li><Link to="/login">Login</Link></li>
-              <li><Link to="/qr-login">🔍 QR Login</Link></li>
-              <li><Link to="/register">Register</Link></li>
+              <li><Link to="/qr-login">🔍 QR</Link></li>
             </>
           ) : (
             <>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/meet-founders">Meet Founders</Link></li>
-              <li><Link to="/contact">Contact Us</Link></li>
-              <li><Link to="/supply">Supply Now</Link></li>
-              <li><Link to="/bottle-scan">🔍 Scan Bottles</Link></li>
-              <li><Link to="/bottle-scan-ai">🤖 AI Scan</Link></li>
               <li><Link to="/dashboard">Dashboard</Link></li>
-              {user.role === 'admin' && (
-                <li><Link to="/admin">Admin Panel</Link></li>
-              )}
-              <li>
-                <button className="logout-btn" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
+              <li><Link to="/supply">Supply</Link></li>
+              <li><Link to="/bottle-scan">Scan</Link></li>
+              <li><Link to="/scanner-game">💰 Earn</Link></li>
+              {user.role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
+              <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
             </>
           )}
         </ul>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="mobile-menu-btn" 
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}></span>
+        </button>
+
+        {/* Mobile Menu */}
+        <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+          {!user ? (
+            <>
+              <Link to="/" onClick={closeMobileMenu}>Home</Link>
+              <Link to="/meet-founders" onClick={closeMobileMenu}>Founders</Link>
+              <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
+              <Link to="/login" onClick={closeMobileMenu}>Login</Link>
+              <Link to="/qr-login" onClick={closeMobileMenu}>🔍 QR Login</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/dashboard" onClick={closeMobileMenu}>Dashboard</Link>
+              <Link to="/supply" onClick={closeMobileMenu}>Supply</Link>
+              <Link to="/bottle-scan" onClick={closeMobileMenu}>Scan</Link>
+              <Link to="/scanner-game" onClick={closeMobileMenu}>💰 Earn</Link>
+              {user.role === 'admin' && <Link to="/admin" onClick={closeMobileMenu}>Admin</Link>}
+              <button onClick={() => { handleLogout(); closeMobileMenu(); }} className="logout-btn">Logout</button>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

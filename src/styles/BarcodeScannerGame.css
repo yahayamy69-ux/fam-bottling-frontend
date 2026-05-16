@@ -1,0 +1,346 @@
+.barcode-scanner-game-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.scanner-game-content {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.scanner-game-content h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+/* Earnings Card */
+.earnings-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.earnings-card h2 {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.earnings-display {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.currency-symbol {
+  font-size: 2rem;
+  margin-right: 5px;
+}
+
+.earnings-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Instructions Card */
+.instructions-card {
+  background: #f0f4ff;
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.instructions-card h3 {
+  color: #667eea;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.instructions-card ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #555;
+}
+
+.instructions-card li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.instructions-card strong {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Code Display Card */
+.code-display-card {
+  background: #fff9e6;
+  border: 2px solid #ffc107;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.code-label {
+  color: #666;
+  margin: 0 0 15px 0;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.code-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display-code {
+  background: white;
+  border: 3px dashed #ffc107;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  min-width: 150px;
+}
+
+.display-code p {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #667eea;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 5px;
+}
+
+.code-hint {
+  color: #999;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Message Box */
+.message-box {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-success {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.message-error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.message-info {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+/* Sections */
+.scanner-section,
+.manual-entry-section,
+.new-code-section {
+  margin-bottom: 25px;
+}
+
+.scanner-section h3,
+.manual-entry-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+/* Scanner Container */
+#qr-scanner-container-game {
+  margin-bottom: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Manual Input Form */
+.manual-input-form {
+  display: flex;
+  gap: 10px;
+}
+
+.code-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  transition: border-color 0.3s ease;
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.manual-input-form .btn {
+  flex: 0 0 auto;
+}
+
+/* New Code Section */
+.new-code-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  border-top: 2px solid #eee;
+}
+
+.new-code-section .btn {
+  width: auto;
+  padding: 10px 30px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .scanner-game-content {
+    padding: 20px;
+  }
+
+  .scanner-game-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .earnings-display {
+    font-size: 2rem;
+  }
+
+  .display-code p {
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .manual-input-form {
+    flex-direction: column;
+  }
+
+  .manual-input-form .btn {
+    width: 100%;
+  }
+
+  .new-code-section {
+    padding: 15px 0 0 0;
+  }
+
+  .new-code-section .btn {
+    width: 100%;
+  }
+}
+
+/* Loading State */
+.btn:disabled {
+  opacity: 0.6;
+}
+
+/* Camera Error Styling */
+.scanner-error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+}

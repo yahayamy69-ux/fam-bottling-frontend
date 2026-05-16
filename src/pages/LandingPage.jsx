@@ -18,7 +18,7 @@ const LandingPage = () => {
       revenue: 4000000
     };
 
-    const duration = 2000; // 2 seconds
+    const duration = 5000; // 5 seconds
     const steps = 60;
     const interval = duration / steps;
 
