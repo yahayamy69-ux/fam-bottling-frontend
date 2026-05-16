@@ -56,7 +56,12 @@ const BarcodeScannerGame = ({ user }) => {
       setMessageType('error');
     }
   };
-ole.log('🔍 Processing scanned value:', scannedValue);
+
+  // Process the scan
+  const handleScanSuccess = async (scannedValue) => {
+    try {
+      setLoading(true);
+      console.log('🔍 Processing scanned value:', scannedValue);
       const response = await scannerGameService.processScan(scannedValue);
       console.log('✅ Scan response:', response.data);
       
@@ -77,11 +82,17 @@ ole.log('🔍 Processing scanned value:', scannedValue);
       }
     } catch (error) {
       console.error('❌ Scan error:', error);
-      setMessage(error.response?.data?.message || error
-          setMessage('');
-        }, 2000);
-      }
-    } catch (error) {
+      setMessage(error.response?.data?.message || error.message || 'Scan failed');
+      setMessageType('error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Start camera scanner
+  const startScanner = async () => {
+    if (scanning) return;
+
     console.log('📹 Starting camera scanner...');
     setScanning(true);
     
@@ -139,18 +150,7 @@ ole.log('🔍 Processing scanned value:', scannedValue);
       console.error('❌ Failed to render scanner:', err);
       setScanning(false);
       const errorMsg = err.message || 'Unknown error';
-      setMessage(`📷 Camera error: ${errorMsg}. Make sure you allow camera access.') && 
-          !error.includes('No QR code found')) {
-        console.warn('Scanner error:', error);
-      }
-    };
-
-    try {
-      await html5QrcodeScan.render(onScanSuccess, onScanFailure);
-    } catch (err) {
-      console.error('Failed to render scanner:', err);
-      setScanning(false);
-      setMessage(`Camera error: ${err.message}`);
+      setMessage(`📷 Camera error: ${errorMsg}. Make sure you allow camera access.`);
       setMessageType('error');
     }
   };
@@ -171,7 +171,7 @@ ole.log('🔍 Processing scanned value:', scannedValue);
   };
 
   // Cleanup on component unmount
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (html5QrcodeScannerRef.current) {
         try {
