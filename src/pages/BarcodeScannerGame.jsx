@@ -41,14 +41,20 @@ const BarcodeScannerGame = ({ user }) => {
       setQrLoading(true);
       setMessage('');
       const token = localStorage.getItem('token');
+      if (!token) {
+        setMessage('Error: No authentication token found.');
+        setQrLoading(false);
+        return;
+      }
       const qrUrl = `${window.location.origin}/claim-now?token=${token}`;
       console.log('Generated claim QR URL:', qrUrl);
       const img = await QRCode.toDataURL(qrUrl, { width: 220 });
+      console.log('QR generated successfully:', img.substring(0, 50) + '...');
       setQrImage(img);
       setMessage('Scan this QR with your phone to claim ₦10.');
     } catch (err) {
       console.error('Failed to generate claim QR:', err);
-      setMessage('Unable to generate QR at this time.');
+      setMessage('Unable to generate QR at this time: ' + err.message);
     } finally {
       setQrLoading(false);
     }
