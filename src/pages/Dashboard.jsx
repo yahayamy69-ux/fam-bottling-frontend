@@ -32,8 +32,16 @@ const Dashboard = ({ user }) => {
       }
     };
 
+    // Listen for storage changes from other tabs/windows
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    
+    // Listen for custom claim success event from same tab
+    window.addEventListener('claimSuccess', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('claimSuccess', handleStorageChange);
+    };
   }, []);
 
   useEffect(() => {

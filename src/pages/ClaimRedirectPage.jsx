@@ -22,15 +22,23 @@ const ClaimRedirectPage = () => {
         'Authorization': `Bearer ${token}`
       }
     })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      }
-      return res.json();
-    })
+    .then(res => res.json())
     .then(data => {
       console.log('Claim response:', data);
-      setMessage(data.success ? '✓ ₦10 added to your balance!' : (data.message || 'Claim failed.'));
+      
+      if (data.success) {
+        // Update localStorage immediately with new balance
+        const stored = JSON.parse(localStorage.getItem('user') || '{}');
+        stored.totalCashback = (stored.totalCashback || 0) + 10;
+        localStorage.setItem('user', JSON.stringify(stored));
+        
+        // Dispatch custom event to notify Dashboard
+        window.dispatchEvent(new Event('claimSuccess'));
+        
+        setMessage('✓ ₦10 added to your balance!');
+      } else {
+        setMessage(data.message || 'Claim failed.');
+      }
     })
     .catch(err => {
       console.error('Claim error:', err);
