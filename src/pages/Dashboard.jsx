@@ -15,6 +15,36 @@ const Dashboard = ({ user }) => {
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('all');
 
+  // Listen for localStorage changes (from other tabs or claim page)
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const updatedUser = localStorage.getItem('user');
+      if (updatedUser) {
+        try {
+          const parsed = JSON.parse(updatedUser);
+          setSummary(prev => ({
+            ...prev,
+            totalCashback: parsed.totalCashback || 0
+          }));
+        } catch (e) {
+          console.error('Failed to parse updated user:', e);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  useEffect(() => {
+    if (user?.totalCashback !== undefined) {
+      setSummary(prev => ({
+        ...prev,
+        totalCashback: user.totalCashback
+      }));
+    }
+  }, [user?.totalCashback]);
+
   useEffect(() => {
     fetchSupplies();
   }, []);
