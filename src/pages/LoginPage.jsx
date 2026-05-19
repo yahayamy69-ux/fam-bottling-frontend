@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import { authService } from '../services/api';
+import { authService, machineService } from '../services/api';
 import '../styles/AuthPages.css';
 
 const LoginPage = ({ setUser }) => {
@@ -29,6 +29,17 @@ const LoginPage = ({ setUser }) => {
       localStorage.setItem('user', JSON.stringify(user));
 
       setUser(user);
+
+      const pendingMachineSessionId = localStorage.getItem('pendingMachineSessionId');
+      if (pendingMachineSessionId) {
+        try {
+          await machineService.completeSession(pendingMachineSessionId);
+        } catch (completeError) {
+          console.warn('Machine session completion failed:', completeError.response?.data?.message || completeError.message);
+        }
+        localStorage.removeItem('pendingMachineSessionId');
+      }
+
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
@@ -73,7 +84,7 @@ const LoginPage = ({ setUser }) => {
         </form>
 
         <p className="auth-link">
-          Don't have an account? <a href="/register">Register here</a>
+          Don't have an account? <Link to="/register">Register here</Link>
         </p>
       </Card>
     </div>

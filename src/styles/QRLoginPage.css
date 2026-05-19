@@ -137,6 +137,41 @@
   border-left: 4px solid #dc2626;
 }
 
+.code-login-form {
+  display: grid;
+  gap: 12px;
+}
+
+.code-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.btn-primary,
+.btn-secondary {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #1e7145;
+  color: white;
+}
+
+.btn-secondary {
+  background: white;
+  color: #1e7145;
+  border: 2px solid #1e7145;
+}
+
 .success-message {
   background: #f0fdf4;
   color: #15803d;
@@ -145,6 +180,44 @@
   margin-bottom: 20px;
   font-size: 14px;
   border-left: 4px solid #22c55e;
+}
+
+.qr-display-panel {
+  display: grid;
+  gap: 18px;
+  text-align: center;
+  align-items: center;
+}
+
+.qr-image-container {
+  padding: 18px;
+  background: #f8fafc;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(30, 113, 69, 0.08);
+}
+
+.qr-image {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 18px;
+  border: 2px solid #d1fae5;
+}
+
+.qr-details {
+  background: #f0fdf4;
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: #065f46;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.qr-details p {
+  margin: 0 0 8px 0;
+}
+
+.qr-details p:last-child {
+  margin-bottom: 0;
 }
 
 .qr-info-section {

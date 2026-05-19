@@ -4,6 +4,7 @@ import '../styles/SPVRMMachine.css';
 
 const SPVRMMachine = () => {
   const [qrCode, setQrCode] = useState(null);
+  const [loginCode, setLoginCode] = useState(null);
   const [sessionCode, setSessionCode] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -23,6 +24,7 @@ const SPVRMMachine = () => {
 
       if (response.ok) {
         setQrCode(data.qrImage);
+        setLoginCode(data.loginCode || null);
         setSessionCode(data.sessionCode);
         // Start polling for authentication
         startPolling(data.sessionCode);
@@ -80,15 +82,19 @@ const SPVRMMachine = () => {
       if (userData) {
         setUser(JSON.parse(userData));
         navigate('/bottle-scan');
+        return;
       }
     }
+
+    // Automatically generate a QR code on first load so the machine is ready
+    generateQRCode();
 
     return () => {
       if (pollInterval) {
         clearInterval(pollInterval);
       }
     };
-  }, [navigate, pollInterval]);
+  }, [navigate]);
 
   return (
     <div className="spvrm-machine">
@@ -145,6 +151,13 @@ const SPVRMMachine = () => {
               <div className="spvrm-qr-box">
                 <img src={qrCode} alt="QR Code for authentication" />
               </div>
+
+              {loginCode && (
+                <div className="spvrm-login-code">
+                  <p>Or enter this 4-digit code in the mobile login screen:</p>
+                  <div className="spvrm-code-value">{loginCode}</div>
+                </div>
+              )}
 
               <p className="spvrm-timer">
                 ⏱️ Code expires in 10 minutes

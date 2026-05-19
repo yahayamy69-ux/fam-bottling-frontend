@@ -59,13 +59,14 @@ const Navbar = ({ user, onLogout }) => {
               <li><Link to="/meet-founders">Founders</Link></li>
               <li><Link to="/contact">Contact</Link></li>
               <li><Link to="/login">Login</Link></li>
-              <li><Link to="/qr-login">🔍 QR</Link></li>
+              <li><Link to="/login">Claim ₦10</Link></li>
             </>
           ) : (
             <>
               <li><Link to="/dashboard">Dashboard</Link></li>
               <li><Link to="/supply">Supply</Link></li>
               <li><Link to="/bottle-scan">Scan</Link></li>
+              <li><Link to="/scanner-game">Claim ₦10</Link></li>
               <li><Link to="/scanner-game">💰 Earn</Link></li>
               {user.role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
               <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
@@ -90,13 +91,14 @@ const Navbar = ({ user, onLogout }) => {
               <Link to="/meet-founders" onClick={closeMobileMenu}>Founders</Link>
               <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
               <Link to="/login" onClick={closeMobileMenu}>Login</Link>
-              <Link to="/qr-login" onClick={closeMobileMenu}>🔍 QR Login</Link>
+              <Link to="/login" onClick={closeMobileMenu}>Claim ₦10</Link>
             </>
           ) : (
             <>
               <Link to="/dashboard" onClick={closeMobileMenu}>Dashboard</Link>
               <Link to="/supply" onClick={closeMobileMenu}>Supply</Link>
               <Link to="/bottle-scan" onClick={closeMobileMenu}>Scan</Link>
+              <Link to="/scanner-game" onClick={closeMobileMenu}>Claim ₦10</Link>
               <Link to="/scanner-game" onClick={closeMobileMenu}>💰 Earn</Link>
               {user.role === 'admin' && <Link to="/admin" onClick={closeMobileMenu}>Admin</Link>}
               <button onClick={() => { handleLogout(); closeMobileMenu(); }} className="logout-btn">Logout</button>

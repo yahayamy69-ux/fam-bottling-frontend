@@ -43,12 +43,22 @@ const QRScanner = ({ onScan, onError, title = 'Scan QR Code or Barcode', allowCl
       }
     };
 
-    // Add error handling for render
-    html5QrcodeScan.render(onScanSuccess, onScanFailure).catch((err) => {
+    // Add error handling for render.
+    // html5-qrcode render may return a promise or undefined depending on package version.
+    try {
+      const renderResult = html5QrcodeScan.render(onScanSuccess, onScanFailure);
+      if (renderResult && typeof renderResult.catch === 'function') {
+        renderResult.catch((err) => {
+          console.error('Failed to render scanner:', err);
+          setScanning(false);
+          onError?.(`Failed to start camera: ${err.message}`);
+        });
+      }
+    } catch (err) {
       console.error('Failed to render scanner:', err);
       setScanning(false);
       onError?.(`Failed to start camera: ${err.message}`);
-    });
+    }
 
     return () => {
       if (html5QrcodeScannerRef.current) {

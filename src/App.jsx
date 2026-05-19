@@ -10,12 +10,15 @@ import SupplyForm from './pages/SupplyForm';
 import BottleScanForm from './pages/BottleScanForm';
 import BottleScanFormAI from './pages/BottleScanFormAI';
 import QRLoginPage from './pages/QRLoginPage';
+import RechargeQRPage from './pages/RechargeQRPage';
+import MachineLoginPage from './pages/MachineLoginPage';
 import SPVRMMachine from './pages/SPVRMMachine';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import MeetFounders from './pages/MeetFounders';
 import ContactUs from './pages/ContactUs';
 import BarcodeScannerGame from './pages/BarcodeScannerGame';
+import ClaimRedirectPage from './pages/ClaimRedirectPage';
 
 // Components
 import Navbar from './components/Navbar';
@@ -52,12 +55,15 @@ function App() {
         <Route path="/machine" element={<SPVRMMachine />} />
 
         {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
         <Route path="/meet-founders" element={<MeetFounders />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LoginPage setUser={setUser} />} />
         <Route path="/qr-login" element={<QRLoginPage setUser={setUser} />} />
         <Route path="/qr-auth" element={<QRLoginPage setUser={setUser} />} />
+        <Route path="/recharge/qr" element={<RechargeQRPage />} />
+        <Route path="/claim-now" element={<ClaimRedirectPage />} />
+        <Route path="/machine-login" element={<MachineLoginPage setUser={setUser} />} />
         <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <RegisterPage setUser={setUser} />} />
 
         {/* Protected Routes */}

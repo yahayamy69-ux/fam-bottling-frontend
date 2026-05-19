@@ -1,7 +1,9 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
+    {      "source": "/api/(.*)",
+      "destination": "https://fam-bottling-backend-theta.vercel.app/api/$1"
+    },
+    {      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

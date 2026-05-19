@@ -1,15 +1,139 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import QRCode from 'qrcode';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import { scannerGameService } from '../services/api';
 import '../styles/LandingPage.css';
 
-const LandingPage = () => {
+const LandingPage = ({ user, setUser }) => {
   const [animatedStats, setAnimatedStats] = useState({
     bottles: 0,
     waste: 0,
     revenue: 0
   });
+  const [currentCode, setCurrentCode] = useState(null);
+  const [currentSessionId, setCurrentSessionId] = useState(null);
+  const [qrCodeImage, setQrCodeImage] = useState(null);
+  const [qrWarning, setQrWarning] = useState('');
+  const [manualInput, setManualInput] = useState('');
+  const [scanMessage, setScanMessage] = useState('');
+  const [scanMessageType, setScanMessageType] = useState('');
+  const [scanLoading, setScanLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      generateNewCode();
+    }
+  }, [user]);
+
+  // Generate QR code whenever currentCode changes
+  const getPublicBaseUrl = () => {
+    const origin = window.location.origin;
+
+    // Localhost is not publicly reachable from another device.
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return null;
+    }
+
+    return origin;
+  };
+
+  useEffect(() => {
+    if (currentCode?.code) {
+      const generateQR = async () => {
+        try {
+          const baseUrl = getPublicBaseUrl();
+
+          if (!baseUrl) {
+            setQrWarning('QR unavailable in local development');
+            setQrCodeImage(null);
+            return;
+          }
+
+          setQrWarning('');
+
+          const qrData = `${baseUrl}/recharge/qr?sessionId=${encodeURIComponent(currentCode.sessionId)}&token=${encodeURIComponent(currentCode.rechargeToken)}`;
+          console.log('Generated recharge QR URL:', qrData);
+          const qrImage = await QRCode.toDataURL(qrData, {
+            errorCorrectionLevel: 'H',
+            type: 'image/png',
+            width: 200,
+            margin: 2,
+            color: { dark: '#1e7145', light: '#ffffff' }
+          });
+          setQrCodeImage(qrImage);
+        } catch (error) {
+          console.error('QR code generation failed:', error);
+          setQrWarning('Unable to generate QR code at this time.');
+        }
+      };
+      generateQR();
+    }
+  }, [currentCode]);
+
+  const updateUserBalance = (newBalance) => {
+    if (!user || !setUser) return;
+    const updatedUser = { ...user, totalCashback: newBalance };
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
+  const generateNewCode = async () => {
+    if (!user) return;
+
+    try {
+      setQrWarning('');
+      setScanLoading(true);
+      setScanMessage('');
+      const response = await scannerGameService.generateCode();
+      const codeData = response.data.data || response.data;
+      setCurrentCode(codeData);
+      setCurrentSessionId(codeData.sessionId);
+      setManualInput('');
+      setScanMessage('Scan or enter the 4-digit code below to earn ₦10.');
+      setScanMessageType('info');
+    } catch (error) {
+      setScanMessage(error.response?.data?.message || 'Unable to generate code.');
+      setScanMessageType('error');
+    } finally {
+      setScanLoading(false);
+    }
+  };
+
+  const handleManualSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      setScanMessage('Please login to scan and earn ₦10.');
+      setScanMessageType('error');
+      return;
+    }
+    if (manualInput.trim().length !== 4) {
+      setScanMessage('Enter a valid 4-digit code.');
+      setScanMessageType('error');
+      return;
+    }
+
+    try {
+      setScanLoading(true);
+      setScanMessage('Validating your code...');
+      setScanMessageType('info');
+      const response = await scannerGameService.processScan(manualInput.trim(), currentSessionId);
+      if (response.data.success) {
+        const result = response.data.data || response.data;
+        const newBalance = result.newBalance ?? user.totalCashback + 10;
+        updateUserBalance(newBalance);
+        setScanMessage(response.data.message || 'Success! ₦10 added to your balance.');
+        setScanMessageType('success');
+        generateNewCode();
+      }
+    } catch (error) {
+      setScanMessage(error.response?.data?.message || 'Code validation failed.');
+      setScanMessageType('error');
+    } finally {
+      setScanLoading(false);
+    }
+  };
 
   useEffect(() => {
     const targets = {
@@ -18,7 +142,7 @@ const LandingPage = () => {
       revenue: 4000000
     };
 
-    const duration = 5000; // 5 seconds
+    const duration = 2000; // 2 seconds
     const steps = 60;
     const interval = duration / steps;
 
@@ -96,6 +220,86 @@ const LandingPage = () => {
               </Link>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Scan & Earn Section */}
+      <section className="scan-earn">
+        <div className="container">
+          <h2>Scan & Earn ₦10 Instantly</h2>
+          <p className="scan-earn-subtitle">Use your homepage to enter a 4-digit code and collect cashback instantly.</p>
+
+          {user ? (
+            <div className="scan-earn-grid">
+              <div className="scan-earn-card">
+                <h3>Scan to Recharge</h3>
+                <div className="qr-recharge-panel">
+                  {/* QR Code Display */}
+                  {qrCodeImage ? (
+                    <div className="qr-code-container">
+                      <img src={qrCodeImage} alt="Recharge QR Code" className="qr-code-image" />
+                      <p className="qr-instruction">Scan with your device to add ₦10</p>
+                    </div>
+                  ) : qrWarning ? (
+                    <div className="qr-warning">{qrWarning}</div>
+                  ) : (
+                    <div className="qr-placeholder">Generating QR code...</div>
+                  )}
+
+                  {/* Divider */}
+                  <div className="code-divider">
+                    <span>OR</span>
+                  </div>
+
+                  {/* Manual Code Entry */}
+                  <div className="manual-code-section">
+                    <p className="code-label">Enter 4-digit code:</p>
+                    <form onSubmit={handleManualSubmit} className="scan-form">
+                      <input
+                        type="text"
+                        value={manualInput}
+                        onChange={(e) => setManualInput(e.target.value.replace(/[^0-9]/g, '').slice(0, 4))}
+                        maxLength={4}
+                        placeholder="0000"
+                        className="scan-input"
+                      />
+                      <button type="submit" className="btn btn-primary" disabled={scanLoading || manualInput.length !== 4}>
+                        {scanLoading ? 'Validating...' : 'Submit'}
+                      </button>
+                    </form>
+                  </div>
+
+                  <button
+                    className="btn btn-secondary btn-new-code"
+                    onClick={generateNewCode}
+                    disabled={scanLoading}
+                  >
+                    🔄 New Code
+                  </button>
+                </div>
+              </div>
+
+              <div className="scan-earn-card">
+                <h3>Your Balance</h3>
+                <div className="balance-display">₦{user.totalCashback ?? 0}</div>
+                <p className="balance-note">Scan the QR code or enter the 4-digit code to add ₦10 to your balance.</p>
+              </div>
+            </div>
+          ) : (
+            <div className="scan-earn-guest">
+              <p>Login to scan QR codes and earn instant cashback.</p>
+              <div className="scan-earn-guest-actions">
+                <Link to="/login" className="btn btn-primary">Login</Link>
+                <Link to="/register" className="btn btn-secondary">Register</Link>
+              </div>
+            </div>
+          )}
+
+          {scanMessage && (
+            <div className={`scan-message scan-message-${scanMessageType}`}>
+              {scanMessage}
+            </div>
+          )}
         </div>
       </section>
 

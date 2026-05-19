@@ -169,6 +169,27 @@
   image-rendering: pixelated;
 }
 
+.spvrm-login-code {
+  background: #f8fafc;
+  border: 2px dashed #1e7145;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.spvrm-login-code p {
+  margin: 0 0 12px 0;
+  color: #374151;
+  font-size: 18px;
+}
+
+.spvrm-code-value {
+  font-size: 52px;
+  font-weight: 800;
+  color: #1e7145;
+  letter-spacing: 0.3em;
+}
+
 .spvrm-timer {
   font-size: 20px;
   color: #f59e0b;

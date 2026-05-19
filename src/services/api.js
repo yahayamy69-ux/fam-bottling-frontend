@@ -1,6 +1,19 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+// Default to a relative API path in production, but allow local dev override.
+const getDefaultApiBaseUrl = () => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+
+  if (typeof window !== 'undefined') {
+    return `${window.location.origin}/api`;
+  }
+
+  return '/api';
+};
+
+const API_BASE_URL = getDefaultApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -59,10 +72,21 @@ export const qrService = {
     api.post('/qr/generate-login'),
   authenticateWithQR: (sessionCode) =>
     api.post('/qr/authenticate', { sessionCode }),
+  authenticateWithCode: (loginCode) =>
+    api.post('/qr/authenticate-with-code', { loginCode }),
   checkQRStatus: (sessionCode) =>
     api.get(`/qr/status/${sessionCode}`),
   generateScanSessionQR: () =>
     api.post('/qr/generate-scan-session'),
+};
+
+export const machineService = {
+  generateMachineQRCode: (machineId, name) =>
+    api.post('/machines/generate-qr', { machineId, name }),
+  startSession: (machineId, token) =>
+    api.post('/machines/session', { machineId, token }),
+  completeSession: (sessionId) =>
+    api.post('/machines/session/complete', { sessionId }),
 };
 
 // Bottle scan service
@@ -81,10 +105,15 @@ export const bottleScanService = {
 export const scannerGameService = {
   generateCode: () =>
     api.post('/scanner-game/generate-code'),
-  processScan: (scannedValue) =>
-    api.post('/scanner-game/process-scan', { scannedValue }),
+  processScan: (scannedValue, sessionId) =>
+    api.post('/scanner-game/process-scan', { scannedValue, sessionId }),
   getUserStats: () =>
     api.get('/scanner-game/my-stats'),
+};
+
+// Claim service: simple endpoint to credit +₦10 to authenticated user
+export const claimService = {
+  add10: () => api.post('/claim/add10')
 };
 
 export default api;
