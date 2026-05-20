@@ -60,36 +60,47 @@ const BarcodeScannerGame = ({ user }) => {
     }
   };
 
-  // Manual claim: accept any 4-digit input and credit +₦10
+  // Manual claim: accept 4-digit code and redeem via ESP endpoint
   const handleManualSubmit = async (e) => {
     e.preventDefault();
     const code = manualInput.trim();
     if (code.length !== 4) {
-      setMessage('Please enter any 4 digits.');
+      setMessage('Please enter a 4-digit code.');
       return;
     }
 
     try {
       setLoading(true);
-      setMessage('Processing claim...');
-      const resp = await claimService.add10();
-      const updatedUser = resp.data.data?.user || resp.data.data;
+      setMessage('Processing code...');
       
-      // Update localStorage immediately before showing success message
+      // Call ESP redeem endpoint
+      const token = localStorage.getItem('token');
+      const resp = await fetch(`${window.location.origin}/api/esp/redeem-code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ code })
+      });
+
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        throw new Error(data.message || 'Failed to redeem code');
+      }
+
+      // Update localStorage immediately
       const stored = JSON.parse(localStorage.getItem('user') || '{}');
       stored.totalCashback = (stored.totalCashback || 0) + 10;
       localStorage.setItem('user', JSON.stringify(stored));
       
-      if (updatedUser) {
-        setBalance(updatedUser.totalCashback);
-      } else {
-        setBalance(stored.totalCashback);
-      }
-      setMessage('✓ ₦10 added to your account');
+      setBalance(stored.totalCashback);
+      setMessage('✓ ₦10 added to your balance!');
       setManualInput('');
     } catch (err) {
-      console.error('Manual claim failed:', err);
-      setMessage(err.response?.data?.message || 'Unable to process claim');
+      console.error('Code redemption failed:', err);
+      setMessage(err.message || 'Unable to redeem code');
     } finally {
       setLoading(false);
     }
