@@ -87,6 +87,7 @@ const Dashboard = ({ user }) => {
       pending: '#f59e0b',
       approved: '#10b981',
       paid: '#3b82f6',
+      completed: '#10b981',
       rejected: '#ef4444'
     };
     return colors[status] || '#6b7280';
@@ -94,7 +95,9 @@ const Dashboard = ({ user }) => {
 
   const filteredSupplies = filter === 'all' 
     ? supplies 
-    : supplies.filter(s => s.status === filter);
+    : filter === 'completed'
+    ? supplies.filter(s => s.isRedemption || s.status === 'paid')
+    : supplies.filter(s => !s.isRedemption && s.status === filter);
 
   if (loading) {
     return <div className="loading-container">Loading your dashboard...</div>;
@@ -166,6 +169,12 @@ const Dashboard = ({ user }) => {
             >
               Paid
             </button>
+            <button
+              className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
+              onClick={() => setFilter('completed')}
+            >
+              🎁 Rewards
+            </button>
           </div>
         </div>
 
@@ -190,18 +199,31 @@ const Dashboard = ({ user }) => {
               </thead>
               <tbody>
                 {filteredSupplies.map((supply) => (
-                  <tr key={supply._id}>
+                  <tr key={supply._id} className={supply.isRedemption ? 'redemption-row' : ''}>
                     <td>{new Date(supply.createdAt).toLocaleDateString()}</td>
-                    <td>{supply.bottleSize}</td>
-                    <td>{supply.quantity}</td>
-                    <td>₦{supply.totalAmount.toFixed(0)}</td>
-                    <td className="cashback-cell">₦{supply.cashback.toFixed(0)}</td>
+                    {supply.isRedemption ? (
+                      <>
+                        <td colSpan="2">
+                          <span className="redemption-badge">🎁 Reward Code</span>
+                          <strong>{supply.code}</strong>
+                        </td>
+                        <td>₦{supply.amount.toFixed(0)}</td>
+                        <td>-</td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{supply.bottleSize}</td>
+                        <td>{supply.quantity}</td>
+                        <td>₦{supply.totalAmount.toFixed(0)}</td>
+                        <td className="cashback-cell">₦{supply.cashback.toFixed(0)}</td>
+                      </>
+                    )}
                     <td>
                       <span
                         className="status-badge"
-                        style={{ backgroundColor: getStatusColor(supply.status) }}
+                        style={{ backgroundColor: getStatusColor(supply.isRedemption ? 'completed' : supply.status) }}
                       >
-                        {supply.status}
+                        {supply.isRedemption ? '✅ Completed' : supply.status}
                       </span>
                     </td>
                   </tr>

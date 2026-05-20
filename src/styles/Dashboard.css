@@ -153,6 +153,26 @@
   color: white;
 }
 
+/* Redemption Row Styling */
+.redemption-row {
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+.redemption-row:hover {
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.redemption-badge {
+  display: inline-block;
+  background: #22c55e;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
 .action-card {
   text-align: center;
   padding: 2rem;
