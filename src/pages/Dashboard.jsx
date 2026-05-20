@@ -96,8 +96,8 @@ const Dashboard = ({ user }) => {
   const filteredSupplies = filter === 'all' 
     ? supplies 
     : filter === 'completed'
-    ? supplies.filter(s => s.isRedemption || s.status === 'paid')
-    : supplies.filter(s => !s.isRedemption && s.status === filter);
+    ? supplies.filter(s => (s.isRedemption || s.isClaim) || s.status === 'paid')
+    : supplies.filter(s => !s.isRedemption && !s.isClaim && s.status === filter);
 
   if (loading) {
     return <div className="loading-container">Loading your dashboard...</div>;
@@ -199,13 +199,22 @@ const Dashboard = ({ user }) => {
               </thead>
               <tbody>
                 {filteredSupplies.map((supply) => (
-                  <tr key={supply._id} className={supply.isRedemption ? 'redemption-row' : ''}>
+                  <tr key={supply._id} className={supply.isRedemption ? 'redemption-row' : supply.isClaim ? 'claim-row' : ''}>
                     <td>{new Date(supply.createdAt).toLocaleDateString()}</td>
                     {supply.isRedemption ? (
                       <>
                         <td colSpan="2">
                           <span className="redemption-badge">🎁 Reward Code</span>
                           <strong>{supply.code}</strong>
+                        </td>
+                        <td>₦{supply.amount.toFixed(0)}</td>
+                        <td>-</td>
+                      </>
+                    ) : supply.isClaim ? (
+                      <>
+                        <td colSpan="2">
+                          <span className="claim-badge">💰 Claim</span>
+                          <strong>Code {supply.displayCode}</strong>
                         </td>
                         <td>₦{supply.amount.toFixed(0)}</td>
                         <td>-</td>
@@ -221,9 +230,9 @@ const Dashboard = ({ user }) => {
                     <td>
                       <span
                         className="status-badge"
-                        style={{ backgroundColor: getStatusColor(supply.isRedemption ? 'completed' : supply.status) }}
+                        style={{ backgroundColor: getStatusColor(supply.isRedemption || supply.isClaim ? 'completed' : supply.status) }}
                       >
-                        {supply.isRedemption ? '✅ Completed' : supply.status}
+                        {(supply.isRedemption || supply.isClaim) ? '✅ Completed' : supply.status}
                       </span>
                     </td>
                   </tr>

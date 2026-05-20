@@ -98,6 +98,10 @@ const BarcodeScannerGame = ({ user }) => {
       setBalance(stored.totalCashback);
       setMessage('✓ ₦10 added to your balance!');
       setManualInput('');
+
+      // Dispatch event for Dashboard to listen and update
+      const event = new Event('claimSuccess');
+      window.dispatchEvent(event);
     } catch (err) {
       console.error('Code redemption failed:', err);
       setMessage(err.message || 'Unable to redeem code');

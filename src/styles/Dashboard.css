@@ -173,6 +173,26 @@
   margin-right: 0.5rem;
 }
 
+/* Claim Row Styling */
+.claim-row {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.claim-row:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.claim-badge {
+  display: inline-block;
+  background: #3b82f6;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
 .action-card {
   text-align: center;
   padding: 2rem;
