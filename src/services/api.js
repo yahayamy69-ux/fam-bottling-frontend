@@ -116,4 +116,10 @@ export const claimService = {
   add10: () => api.post('/claim/add10')
 };
 
+// Redeem service: redeem reward codes for points
+export const redeemService = {
+  redeemCode: (code) =>
+    api.post('/redeem', { code })
+};
+
 export default api;

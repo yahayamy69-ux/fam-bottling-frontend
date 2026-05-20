@@ -68,6 +68,7 @@ const Navbar = ({ user, onLogout }) => {
               <li><Link to="/bottle-scan">Scan</Link></li>
               <li><Link to="/scanner-game">Claim ₦10</Link></li>
               <li><Link to="/scanner-game">💰 Earn</Link></li>
+              <li><Link to="/redeem">🎁 Redeem</Link></li>
               {user.role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
               <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
             </>
@@ -100,6 +101,7 @@ const Navbar = ({ user, onLogout }) => {
               <Link to="/bottle-scan" onClick={closeMobileMenu}>Scan</Link>
               <Link to="/scanner-game" onClick={closeMobileMenu}>Claim ₦10</Link>
               <Link to="/scanner-game" onClick={closeMobileMenu}>💰 Earn</Link>
+              <Link to="/redeem" onClick={closeMobileMenu}>🎁 Redeem</Link>
               {user.role === 'admin' && <Link to="/admin" onClick={closeMobileMenu}>Admin</Link>}
               <button onClick={() => { handleLogout(); closeMobileMenu(); }} className="logout-btn">Logout</button>
             </>

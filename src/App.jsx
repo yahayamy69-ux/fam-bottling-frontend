@@ -19,6 +19,7 @@ import MeetFounders from './pages/MeetFounders';
 import ContactUs from './pages/ContactUs';
 import BarcodeScannerGame from './pages/BarcodeScannerGame';
 import ClaimRedirectPage from './pages/ClaimRedirectPage';
+import RedeemPage from './pages/RedeemPage';
 
 // Components
 import Navbar from './components/Navbar';
@@ -97,6 +98,7 @@ function App() {
         <Route path="/bottle-scan-ai" element={user ? <BottleScanFormAI /> : <Navigate to="/login" />} />
         <Route path="/qr-scan" element={user ? <BottleScanForm /> : <Navigate to="/login" />} />
         <Route path="/scanner-game" element={user ? <BarcodeScannerGame user={user} /> : <Navigate to="/login" />} />
+        <Route path="/redeem" element={user ? <RedeemPage user={user} /> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} />
 
         {/* Admin Routes */}
