@@ -37,7 +37,7 @@ const RedeemPage = ({ user }) => {
       const response = await redeemService.redeemCode(code);
 
       if (response.data.success) {
-        const { pointsEarned, previousTotal, newTotal } = response.data.data;
+        const { pointsEarned, previousTotal, newTotal, user: updatedUser } = response.data.data;
 
         setSuccess('✅ Reward code redeemed successfully!');
         setResult({
@@ -46,14 +46,16 @@ const RedeemPage = ({ user }) => {
           newTotal
         });
 
-        // Update user in localStorage
-        const updatedUser = {
-          ...user,
+        // Update complete user object in localStorage
+        const userFromStorage = JSON.parse(localStorage.getItem('user') || '{}');
+        const updatedUserData = {
+          ...userFromStorage,
+          ...updatedUser,
           totalCashback: newTotal
         };
-        localStorage.setItem('user', JSON.stringify(updatedUser));
+        localStorage.setItem('user', JSON.stringify(updatedUserData));
 
-        // Dispatch event for Dashboard to listen
+        // Dispatch event for Dashboard and App to listen
         window.dispatchEvent(new Event('claimSuccess'));
 
         // Reset form

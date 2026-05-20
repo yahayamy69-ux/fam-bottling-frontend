@@ -32,15 +32,25 @@ const Dashboard = ({ user }) => {
       }
     };
 
+    const handleClaimOrRedeemSuccess = () => {
+      // Update from localStorage first
+      handleStorageChange();
+      
+      // Refetch supplies and summary to get updated stats
+      setTimeout(() => {
+        fetchSupplies();
+      }, 300);
+    };
+
     // Listen for storage changes from other tabs/windows
     window.addEventListener('storage', handleStorageChange);
     
-    // Listen for custom claim success event from same tab
-    window.addEventListener('claimSuccess', handleStorageChange);
+    // Listen for custom claim/redeem success event from same tab - refetch data
+    window.addEventListener('claimSuccess', handleClaimOrRedeemSuccess);
     
     return () => {
       window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('claimSuccess', handleStorageChange);
+      window.removeEventListener('claimSuccess', handleClaimOrRedeemSuccess);
     };
   }, []);
 
@@ -118,7 +128,7 @@ const Dashboard = ({ user }) => {
 
         <Card className="stat-card">
           <h3>Total Cashback</h3>
-          <p className="stat-value">₦{summary.totalCashback.toFixed(0)}</p>
+          <p className="stat-value">₦{(user.totalCashback || 0).toFixed(0)}</p>
         </Card>
 
         <Card className="stat-card">
