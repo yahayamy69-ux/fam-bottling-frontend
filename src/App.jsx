@@ -15,6 +15,7 @@ import MachineLoginPage from './pages/MachineLoginPage';
 import SPVRMMachine from './pages/SPVRMMachine';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminPayments from './pages/AdminPayments';
 import MeetFounders from './pages/MeetFounders';
 import ContactUs from './pages/ContactUs';
 import BarcodeScannerGame from './pages/BarcodeScannerGame';
@@ -103,6 +104,7 @@ function App() {
 
         {/* Admin Routes */}
         <Route path="/admin" element={user && user.role === 'admin' ? <AdminDashboard /> : <Navigate to="/dashboard" />} />
+        <Route path="/admin/payments" element={user && user.role === 'admin' ? <AdminPayments user={user} /> : <Navigate to="/dashboard" />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />

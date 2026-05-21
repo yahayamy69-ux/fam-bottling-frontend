@@ -64,7 +64,13 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <h1>Admin Dashboard</h1>
+      <div className="admin-header">
+        <h1>Admin Dashboard</h1>
+        <nav className="admin-nav">
+          <a href="/admin" className="admin-link active">Supplies</a>
+          <a href="/admin/payments" className="admin-link">💰 Payments</a>
+        </nav>
+      </div>
 
       {error && <div className="error-message">{error}</div>}
 

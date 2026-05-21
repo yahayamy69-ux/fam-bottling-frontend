@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import BankAccountForm from '../components/BankAccountForm';
 import { supplyService } from '../services/api';
 import '../styles/Dashboard.css';
 
@@ -242,6 +243,9 @@ const Dashboard = ({ user }) => {
           </div>
         )}
       </Card>
+
+      {/* Bank Account Form */}
+      <BankAccountForm user={user} />
 
       {/* Action Card */}
       <Card className="action-card">

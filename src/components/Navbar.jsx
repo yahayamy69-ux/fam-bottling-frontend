@@ -64,12 +64,11 @@ const Navbar = ({ user, onLogout }) => {
           ) : (
             <>
               <li><Link to="/dashboard">Dashboard</Link></li>
-              <li><Link to="/supply">Supply</Link></li>
-              <li><Link to="/bottle-scan">Scan</Link></li>
               <li><Link to="/scanner-game">Claim ₦10</Link></li>
               <li><Link to="/scanner-game">💰 Earn</Link></li>
               <li><Link to="/redeem">🎁 Redeem</Link></li>
               {user.role === 'admin' && <li><Link to="/admin">Admin</Link></li>}
+              {user.role === 'admin' && <li><Link to="/admin/payments">💳 Payments</Link></li>}
               <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
             </>
           )}
@@ -97,12 +96,11 @@ const Navbar = ({ user, onLogout }) => {
           ) : (
             <>
               <Link to="/dashboard" onClick={closeMobileMenu}>Dashboard</Link>
-              <Link to="/supply" onClick={closeMobileMenu}>Supply</Link>
-              <Link to="/bottle-scan" onClick={closeMobileMenu}>Scan</Link>
               <Link to="/scanner-game" onClick={closeMobileMenu}>Claim ₦10</Link>
               <Link to="/scanner-game" onClick={closeMobileMenu}>💰 Earn</Link>
               <Link to="/redeem" onClick={closeMobileMenu}>🎁 Redeem</Link>
               {user.role === 'admin' && <Link to="/admin" onClick={closeMobileMenu}>Admin</Link>}
+              {user.role === 'admin' && <Link to="/admin/payments" onClick={closeMobileMenu}>💳 Payments</Link>}
               <button onClick={() => { handleLogout(); closeMobileMenu(); }} className="logout-btn">Logout</button>
             </>
           )}
