@@ -109,7 +109,7 @@ const AdminPayments = ({ user }) => {
           >
             ✕
           </button>
-        </Card>
+        </div>
       )}
 
       <Card className="summary-card">
